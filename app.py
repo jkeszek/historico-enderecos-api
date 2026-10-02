@@ -29,12 +29,31 @@ def inicio():
 
 
 @app.get("/historico")
-def listar_historico():
+def listar_historico(
+    cep: str | None = None,
+    cidade: str | None = None,
+    uf: str | None = None
+):
     conexao = sqlite3.connect(DATABASE_NAME)
     conexao.row_factory = sqlite3.Row
     cursor = conexao.cursor()
 
-    cursor.execute("SELECT * FROM enderecos")
+    consulta = "SELECT * FROM enderecos WHERE 1=1"
+    parametros = []
+
+    if cep:
+        consulta += " AND cep = ?"
+        parametros.append(cep)
+
+    if cidade:
+        consulta += " AND LOWER(cidade) = LOWER(?)"
+        parametros.append(cidade)
+
+    if uf:
+        consulta += " AND UPPER(uf) = UPPER(?)"
+        parametros.append(uf)
+
+    cursor.execute(consulta, parametros)
     registros = cursor.fetchall()
 
     conexao.close()

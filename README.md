@@ -135,6 +135,26 @@ GET /historico
 
 Retorna os endereços armazenados no histórico.
 
+### Filtrar histórico
+
+O histórico também pode ser filtrado por CEP, cidade e UF através de parâmetros opcionais.
+
+Exemplos:
+
+```text
+GET /historico?cep=04007-004
+GET /historico?cidade=São Paulo
+GET /historico?uf=SP
+```
+
+Os filtros também podem ser combinados:
+
+```text
+GET /historico?cidade=São Paulo&uf=SP
+```
+
+Essa funcionalidade permite localizar registros específicos sem precisar retornar todo o histórico.
+
 ### Consultar registro
 
 ```text
@@ -218,6 +238,8 @@ A porta utilizada pelo serviço é:
 - Cadastro de endereços
 - Consulta do histórico
 - Consulta de registro por ID
+- Filtros de histórico por CEP, cidade e UF
+- Combinação de múltiplos filtros
 - Atualização de endereços
 - Exclusão de registros
 - Persistência em SQLite
